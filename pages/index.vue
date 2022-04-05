@@ -45,7 +45,7 @@ export default {
       });
   },
   created() {
-    // use to simulate api
+    this.$store.dispatch("setPosts", this.loadedPosts);
   },
 };
 </script>
