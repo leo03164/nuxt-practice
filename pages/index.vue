@@ -1,24 +1,46 @@
 <template>
   <div class="homepage">
     <section class="intro">
-      <h1>
-        Get the latest tech news!
-      </h1>
+      <h1>Get the latest tech news!</h1>
     </section>
-    <PostList/>
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
 import PostList from "@/components/Posts/PostList";
 
-export default {  
-  components:{
-    PostList
-  }
-}
+export default {
+  components: {
+    PostList,
+  },
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPosts: [
+          {
+            id: "leo",
+            title: "about nancy",
+            previewText: "she is my girl friend",
+            thumbnail:
+              "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
+          },
+          {
+            id: "nancy",
+            title: "about leo",
+            previewText: "he is my boy friend",
+            thumbnail:
+              "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
+          },
+        ],
+      });
+    }, 1500);
+  },
+  created() {
+    // use to simulate api
+  },
+};
 </script>
-
 
 <style scoped>
 .intro {
@@ -26,7 +48,7 @@ export default {
   position: relative;
   padding: 30px;
   box-sizing: border-box;
-  background-image: url('~assets/images/preview.jpg');
+  background-image: url("~assets/images/preview.jpg");
   background-position: center;
   background-size: cover;
 }
