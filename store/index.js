@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import axios from "axios";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -15,27 +16,20 @@ const createStore = () => {
         vuexContext.commit("setPosts", posts);
       },
       nuxtServerInit(vuexContext, context) {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            vuexContext.commit("setPosts", [
-              {
-                id: "leo",
-                title: "about nancy",
-                previewText: "she is my girl friend",
-                thumbnail:
-                  "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-              },
-              {
-                id: "nancy",
-                title: "about leo",
-                previewText: "he is my boy friend",
-                thumbnail:
-                  "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-              },
-            ]);
-            resolve();
-          }, 1500);
-        });
+        return axios
+          .get(
+            "https://nuxt-project-9e89b-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json"
+          )
+          .then((res) => {
+            const postArray = [];
+            for (const key in res.data) {
+              postArray.push({ ...res.data[key], id: key });
+            }
+            vuexContext.commit("setPosts", postArray);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
     },
     getters: {
