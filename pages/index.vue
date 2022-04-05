@@ -14,38 +14,10 @@ export default {
   components: {
     PostList,
   },
-  asyncData(context) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          loadedPosts: [
-            {
-              id: "leo",
-              title: "about nancy",
-              previewText: "she is my girl friend",
-              thumbnail:
-                "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-            },
-            {
-              id: "nancy",
-              title: "about leo",
-              previewText: "he is my boy friend",
-              thumbnail:
-                "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-            },
-          ],
-        });
-      }, 1500);
-    })
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        context.error = new Error(error);
-      });
-  },
-  created() {
-    this.$store.dispatch("setPosts", this.loadedPosts);
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts;
+    },
   },
 };
 </script>

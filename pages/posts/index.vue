@@ -1,6 +1,6 @@
 <template>
   <div class="posts-page">
-    <PostList :posts="loadedPost" />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
@@ -11,25 +11,10 @@ export default {
   components: {
     PostList,
   },
-  data() {
-    return {
-      loadedPost: [
-        {
-          id: "leo",
-          title: "about nancy",
-          previewText: "she is my girl friend",
-          thumbnail:
-            "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-        },
-        {
-          id: "nancy",
-          title: "about leo",
-          previewText: "he is my boy friend",
-          thumbnail:
-            "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-        },
-      ],
-    };
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts;
+    },
   },
 };
 </script>
