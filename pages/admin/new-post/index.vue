@@ -1,18 +1,34 @@
 <template>
   <div class="admin-new-post-page">
     <section class="new-post-form">
-      <admin-post-form />
+      <admin-post-form @submit="onSubmitted" />
     </section>
   </div>
 </template>
 
 <script>
 import AdminPostForm from "@/components/Admin/AdminPostForm";
+import axios from "axios";
 
 export default {
   layout: "admin",
   components: {
     AdminPostForm,
+  },
+  methods: {
+    onSubmitted(postData) {
+      axios
+        .post(
+          "https://nuxt-project-9e89b-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json",
+          postData
+        )
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
