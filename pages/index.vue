@@ -14,27 +14,35 @@ export default {
   components: {
     PostList,
   },
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPosts: [
-          {
-            id: "leo",
-            title: "about nancy",
-            previewText: "she is my girl friend",
-            thumbnail:
-              "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-          },
-          {
-            id: "nancy",
-            title: "about leo",
-            previewText: "he is my boy friend",
-            thumbnail:
-              "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-          },
-        ],
+  asyncData(context) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          loadedPosts: [
+            {
+              id: "leo",
+              title: "about nancy",
+              previewText: "she is my girl friend",
+              thumbnail:
+                "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
+            },
+            {
+              id: "nancy",
+              title: "about leo",
+              previewText: "he is my boy friend",
+              thumbnail:
+                "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
+            },
+          ],
+        });
+      }, 1500);
+    })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        context.error = new Error(error);
       });
-    }, 1500);
   },
   created() {
     // use to simulate api
