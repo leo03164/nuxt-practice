@@ -16,22 +16,22 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPosts: {
-          id: "leo",
-          title: `About ${context.params.id}`,
-          previewText: "she is my girl friend",
-          author: "leo",
-          updateDate: new Date(),
-          content: "Just a content not preview text",
-          thumbnail:
-            "https://thepolysh.com/blog/wp-content/uploads/2018/11/WhooliChen_cover.png",
-        },
+  asyncData(context) {
+    return axios
+      .get(
+        `https://nuxt-project-9e89b-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${context.params.id}.json`
+      )
+      .then((res) => {
+        return {
+          loadedPosts: res.data,
+        };
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    }, 1000);
   },
 };
 </script>
