@@ -21,9 +21,7 @@ import axios from "axios";
 export default {
   asyncData(context) {
     return axios
-      .get(
-        `https://nuxt-project-9e89b-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${context.params.id}.json`
-      )
+      .get(`${process.env.baseUrl}/posts/${context.params.id}.json`)
       .then((res) => {
         return {
           loadedPosts: res.data,
@@ -32,6 +30,9 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+  },
+  head: {
+    title: "This is a cool website",
   },
 };
 </script>
