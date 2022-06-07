@@ -8,13 +8,11 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-.about-page{
+.about-page {
   text-align: center;
   padding: 30px;
 }

@@ -23,11 +23,10 @@ import TheSideNavToggle from "@/components/Navigation/TheSideNavToggle";
 export default {
   name: "TheHeader",
   components: {
-    TheSideNavToggle
-  }
+    TheSideNavToggle,
+  },
 };
 </script>
-
 
 <style scoped>
 .header-container {

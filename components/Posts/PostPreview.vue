@@ -1,8 +1,11 @@
 <template>
   <nuxt-link :to="postLink" class="post-preview">
-    <article >
-        <div class="post-thumbnail" :style="{backgroundImage: `url(${thumbnail})`}"></div>
-        <div class="post-content"></div>
+    <article>
+      <div
+        class="post-thumbnail"
+        :style="{ backgroundImage: `url(${thumbnail})` }"
+      ></div>
+      <div class="post-content"></div>
         <h1>{{title}}</h1>
         <p>{{previewText}}</p>
     </article>
@@ -11,39 +14,38 @@
 
 <script>
 export default {
-  name: 'PostPreview',
-    props:{
-      id:{
-        type: String,
-        require: true
-      },
-      title: {
-        type: String,
-        require: true
-      },
-      previewText: {
-        type: String,
-        require: true
-      },
-      thumbnail: {
-        type: String,
-        require: true
-      },
-      isAdmin: {
-        type: Boolean,
-        require: true
-      }
+  name: "PostPreview",
+  props: {
+    id: {
+      type: String,
+      require: true,
+    },
+    title: {
+      type: String,
+      require: true,
+    },
+    previewText: {
+      type: String,
+      require: true,
+    },
+    thumbnail: {
+      type: String,
+      require: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      require: true,
+    },
   },
-  computed:{
-    postLink(){
-      return this.isAdmin? '/admin/' + this.id : '/posts/' + this.id;
-    }
-  }
-}
+  computed: {
+    postLink() {
+      return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 .intro {
   height: 300px;
   position: relative;
