@@ -6,8 +6,8 @@
         :style="{ backgroundImage: `url(${thumbnail})` }"
       ></div>
       <div class="post-content"></div>
-        <h1>{{title}}</h1>
-        <p>{{previewText}}</p>
+      <h1 class="preview-text">{{ title }}</h1>
+      <p class="preview-text">{{ previewText }}</p>
     </article>
   </nuxt-link>
 </template>
@@ -95,6 +95,10 @@ export default {
 a {
   text-decoration: none;
   color: black;
+}
+
+.preview-text {
+  padding: 0 15px;
 }
 
 @media (min-width: 850px) {
