@@ -47,5 +47,6 @@ export default {
     baseUrl:
       process.env.BASE_URL ||
       "https://nuxt-project-9e89b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    firebaseApiKey: "AIzaSyDpqawbC5e4Js_JOBp9KRmC2WBuieJdtuc",
   },
 };
