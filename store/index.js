@@ -45,7 +45,10 @@ const createStore = () => {
       addPost(vuexContext, post) {
         const createdPost = { ...post, updateDate: new Date() };
         return axios
-          .post(`${process.env.baseUrl}/posts.json`, createdPost)
+          .post(
+            `${process.env.baseUrl}/posts.json?auth=${vuexContext.state.token}`,
+            createdPost
+          )
           .then((result) => {
             vuexContext.commit("addPost", {
               ...createdPost,
@@ -58,7 +61,10 @@ const createStore = () => {
       },
       editPost(vuexContext, editPost) {
         return axios
-          .put(`${process.env.baseUrl}/posts/${editPost.id}.json`, editPost)
+          .put(
+            `${process.env.baseUrl}/posts/${editPost.id}.json?auth=${vuexContext.state.token}`,
+            editPost
+          )
           .then((res) => {
             vuexContext.commit("editPost", editPost);
           })
