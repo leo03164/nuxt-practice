@@ -18,6 +18,7 @@ import AppButton from "@/components/UI/AppButton";
 
 export default {
   layout: "admin",
+  middleware: "auth",
   components: {
     PostList,
     AppButton,
