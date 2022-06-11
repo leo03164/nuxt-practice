@@ -5,6 +5,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       loadedPosts: [],
+      token: null,
     },
     mutations: {
       setPosts(state, posts) {
@@ -18,6 +19,9 @@ const createStore = () => {
           (post) => post.id === editPost.id
         );
         state.loadedPosts[postIndex] = editPost;
+      },
+      setToken(state, token) {
+        state.token = token;
       },
     },
     actions: {
@@ -60,6 +64,28 @@ const createStore = () => {
           })
           .catch((error) => {
             console.log(error);
+          });
+      },
+      authenticateUser(vuexContext, authData) {
+        let authUrl =
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
+          process.env.firebaseApiKey;
+        if (!authData.isLogin) {
+          authUrl =
+            "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
+            process.env.firebaseApiKey;
+        }
+        return this.$axios
+          .$post(authUrl, {
+            email: authData.email,
+            password: authData.password,
+            returnSecureToken: true,
+          })
+          .then((result) => {
+            vuexContext.commit("setToken", result.idToken);
+          })
+          .catch((e) => {
+            console.warn("Auth Error MSG: ", e.response.data.error.message);
           });
       },
     },
