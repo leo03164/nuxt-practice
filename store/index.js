@@ -1,5 +1,6 @@
 import Vuex from "vuex";
 import axios from "axios";
+import Cookie from "js-cookie";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -22,6 +23,9 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token;
+      },
+      clearToken(state) {
+        state.token = null;
       },
     },
     actions: {
@@ -88,11 +92,49 @@ const createStore = () => {
             returnSecureToken: true,
           })
           .then((result) => {
+            const expirationDate =
+              new Date().getTime() + Number.parseInt(result.expiresIn) * 1000;
+
             vuexContext.commit("setToken", result.idToken);
+            localStorage.setItem("token", result.idToken);
+            localStorage.setItem("tokenExpiration", expirationDate);
+            Cookie.set("jwt", result.idToken);
+            Cookie.set("expirationDate", expirationDate);
           })
           .catch((e) => {
             console.warn("Auth Error MSG: ", e.response.data.error.message);
           });
+      },
+      initAuth(vuexContext, req) {
+        let token;
+        let expirationDate;
+        if (req) {
+          if (!req.headers.cookie) {
+            return;
+          }
+
+          const cookieInfo = req.headers.cookie.split(";");
+          const jwtToken = cookieInfo.find((content) =>
+            content.trim().startsWith("jwt=")
+          );
+          if (!jwtToken) {
+            return;
+          }
+
+          token = jwtToken.split("=")[1];
+
+          expirationDate = req.headers.cookie
+            .split(";")
+            .find((c) => c.trim().startsWith("expirationDate=").split("=")[1]);
+        } else {
+          token = localStorage.getItem("token");
+          expirationDate = localStorage.getItem("tokenExpiration");
+        }
+        if (new Date().getTime() > +expirationDate || !token) {
+          vuexContext.commit("clearToken");
+          return;
+        }
+        vuexContext.commit("setToken", token);
       },
     },
     getters: {
