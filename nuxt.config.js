@@ -1,3 +1,5 @@
+const bodyParser = require("body-parser");
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -52,4 +54,5 @@ export default {
   router: {
     middleware: "log",
   },
+  serverMiddleware: [bodyParser.json(), "~/api"],
 };
